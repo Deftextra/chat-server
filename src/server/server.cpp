@@ -3,8 +3,7 @@
 
 int main()
 {
-  std::cout << "why is this not working" << std::endl;
-  std::cout << "hello world" << std::endl;
+  std::cout << "This is a test for CI" << std::endl;
 
   return 0;
 }
