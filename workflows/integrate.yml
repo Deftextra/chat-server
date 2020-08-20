@@ -1,8 +1,8 @@
 name: http-server build
 
 on:
-    push:
-        branches: [ add-ci-actions ]
+    pull_request:
+        branches: [ master  ]
 
 jobs:
     test_build:
