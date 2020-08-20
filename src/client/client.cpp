@@ -3,6 +3,6 @@
 
 int main()
 {
-  std::cout << "hello world" << std::endl;
+  std::cout << "Testing CI build" << std::endl;
   return 0;
 }
