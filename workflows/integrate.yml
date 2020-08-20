@@ -1,0 +1,17 @@
+name: http-server build
+
+on:
+    pull_request:
+        branches: [ master  ]
+
+jobs:
+    test_build:
+        runs-on: ubuntu-latest
+        container:
+            image: radwans/asio:1.18.0
+            options: -v /__w/actions-test-repo/actions-test-repo:/projects/http-server:rw
+        steps:
+            - uses: actions/checkout@v2
+            - name: build
+                if: always()
+                run: ./cbuild.sh
