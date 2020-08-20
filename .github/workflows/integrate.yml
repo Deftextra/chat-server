@@ -1,7 +1,7 @@
 name: http-server build
 
 on:
-    pull_request:
+    push:
         branches: [ master ]
 
 jobs:
@@ -12,5 +12,4 @@ jobs:
             options: -v /__w/actions-test-repo/actions-test-repo:/projects/http-server:rw
         steps:
             - uses: actions/checkout@v2
-            - name: build
-                run: ./cbuild.sh
+            - run: ./cbuild.sh
