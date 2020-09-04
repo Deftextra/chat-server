@@ -6,6 +6,7 @@ set(SOURCE_FILES
   )
 
 add_executable(server ${SOURCE_FILES})
+target_link_libraries(server ${CMAKE_THREAD_LIBS_INIT} )
 install(TARGETS server DESTINATION ${HTTPSERVER_INSTALL_BIN_DIR})
 
 
