@@ -9,7 +9,7 @@ else
 fi
 
 # Remove build artifacts.
-if [ -d ./bin];then
+if [ -d ./bin ];then
   rm -rf bin
 fi
 
