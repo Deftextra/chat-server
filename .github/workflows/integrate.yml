@@ -1,4 +1,4 @@
-name: http-server build
+name: chat-server build
 
 on:
     push:
