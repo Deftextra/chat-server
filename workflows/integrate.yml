@@ -1,4 +1,4 @@
-name: http-server build
+name: chat-server build
 
 on:
     pull_request:
@@ -9,9 +9,9 @@ jobs:
         runs-on: ubuntu-latest
         container:
             image: radwans/asio:1.18.0
-            options: -v /__w/actions-test-repo/actions-test-repo:/projects/http-server:rw
+            options: -v /__w/actions-test-repo/actions-test-repo:/projects/chat-server:rw
         steps:
             - uses: actions/checkout@v2
             - name: build
-                if: always()
-                run: ./cbuild.sh
+              if: always()
+              run: ./cbuild.sh

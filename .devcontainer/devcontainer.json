@@ -13,7 +13,7 @@
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": ["ms-vscode.cpptools","austin.code-gnu-global"]
+	"extensions": ["ms-vscode.cpptools","austin.code-gnu-global","twxs.cmake"]
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

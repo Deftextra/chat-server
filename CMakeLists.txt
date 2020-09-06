@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(http-server) 
+project(chat-server) 
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_CLANG_TIDY "clang-tidy")
@@ -9,8 +9,8 @@ set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
 
 find_package(Threads)
 
-set(HTTPSERVER_INSTALL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
-set(HTTPSERVER_INSTALL_BIN_DIR ${PROJECT_SOURCE_DIR}/bin)
+set(CHAT_SERVER_INSTALL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
+set(CHAT_SERVER_INSTALL_BIN_DIR ${PROJECT_SOURCE_DIR}/bin)
 
-include_directories(${HTTPSERVER_INSTALL_INCLUDE_DIR})
+include_directories(${CHAT_SERVER_INSTALL_INCLUDE_DIR})
 add_subdirectory(src)
