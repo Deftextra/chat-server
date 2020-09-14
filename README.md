@@ -32,7 +32,7 @@ classDiagram
           -acceptor acceptor
           -async_accept()
           +start()
-          
+  
       }
       class session{
           -socket connected_sock
@@ -44,23 +44,28 @@ classDiagram
           -async_read()
           +put()
           +start()
+          
       }
       class messageQueue{
           +push
           +pop
+          
       }
       class message{
           -string name
           -string body
           +set_name()
           +get_name()
+          
       }
       class participants{
           -string name;
+          
       }
       class room{
           +join()
           +leave()
           +broadcast()
+          
       }
 
