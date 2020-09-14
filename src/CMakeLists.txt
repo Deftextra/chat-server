@@ -3,7 +3,6 @@ project(chat)
 set(SERVER_SOURCE_FILES main_server.cpp)
 set(CLIENT_SOURCE_FILES main_client.cpp)
 
-set(HEADER_FILES asp.hpp)
 
 include_directories(shared)
 
@@ -18,5 +17,3 @@ target_link_libraries(client_run ${CMAKE_THREAD_LIBS_INIT} client)
 
 
 install(TARGETS server_run client_run DESTINATION ${CHAT_SERVER_INSTALL_BIN_DIR})
-install(FILES ${HEADER_FILES} DESTINATION ${CHAT_SERVER_INSTALL_INCLUDE_DIR})
-
