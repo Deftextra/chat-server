@@ -47,9 +47,8 @@ classDiagram
           
       }
       class messageQueue{
-          +push
-          +pop
-          
+          +push()
+          +pop()
       }
       class message{
           -string name
