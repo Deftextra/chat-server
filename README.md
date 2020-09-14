@@ -20,6 +20,7 @@ Quick overview of current build status:
 
 ```mermaid
 classDiagram
+
     message_queue o-- message
     session <-- participants
     server *-- room
