@@ -1,9 +1,2 @@
-#include <cstdlib>
-#include <iostream>
+#include "server.hpp"
 
-int main()
-{
-  std::cout << "This is a test for CI" << std::endl;
-
-  return 0;
-}
