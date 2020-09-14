@@ -20,10 +20,10 @@ Quick overview of current build status:
 
 ```mermaid
 classDiagram
-    messagequeue o-- message
+    messageQueue o-- message
     session <-- participants
     server *-- room
-    message_queue --o room
+    messageQueue --o room
     room o-- participants
     message o-- participants
 
@@ -45,7 +45,7 @@ classDiagram
           +put()
           +start()
       }
-      class message_queue{
+      class messageQueue{
           +push
           +pop
       }
