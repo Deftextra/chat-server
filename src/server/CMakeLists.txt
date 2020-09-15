@@ -13,6 +13,7 @@ set(HEADER_FILES
     server.hpp
     session/session.hpp
     room/room.hpp
+    participant/participant.hpp
 )
 
 add_library(server STATIC ${SOURCE_FILES})
