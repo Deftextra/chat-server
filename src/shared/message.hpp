@@ -8,10 +8,17 @@
 namespace chat {
 class Message {
  public:
-  // Throw exception whenever we go above limit.
-  Message(const std::string& name) : body{} {
+  // Create anonymout message
+  Message(const std::string& body) : name{} {
+    if (body.size() > MAX_BODY_SIZE) {
+      throw "body is to long";
+    }
+    this->body = body;
+  }
+
+  void setName(const std::string& name) {
     if (name.size() > MAX_NAME_SIZE) {
-      throw "Name is to long";
+      throw "name is to long";
     }
     this->name = name;
   }

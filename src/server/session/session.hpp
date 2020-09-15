@@ -2,8 +2,10 @@
 #define SESSION_HPP
 
 #include <queue>
-#include "asp.hpp"
+#include <string>
+
 #include "../participant/participant.hpp"
+#include "asp.hpp"
 
 namespace chat {
 
@@ -13,6 +15,8 @@ class session : public std::enable_shared_from_this<session>,
   session(tcp::socket&& socket);
   void start(message_handler&& on_message, error_handler&& on_error);
   void post(const Message&);
+  std::string compose_name();
+  std::string compose_body();
 
  private:
   void async_read_body();
@@ -24,13 +28,13 @@ class session : public std::enable_shared_from_this<session>,
   void get_name();
   void on_get_name(error_code error, std::size_t bytes_transferred);
 
-    // Outgoing queue prevents us from a data race by writing into the socket.
+  // Outgoing queue prevents us from a data race by writing into the socket.
   std::queue<Message> outgoing;
   tcp::socket connected_sock;
   io::streambuf body_buff;
   message_handler on_susccesful_read;
   error_handler on_error;
-  std::string name;
+  std::string name_buff;
 };
 
 }  // namespace chat

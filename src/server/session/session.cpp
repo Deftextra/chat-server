@@ -30,8 +30,8 @@ void chat::session::on_ask_for_name(error_code error,
 }
 
 void chat::session::get_name() {
-  io::async_read_until(connected_sock, io::dynamic_buffer(name, MAX_NAME_SIZE),
-                       '\n',
+  io::async_read_until(connected_sock,
+                       io::dynamic_buffer(name_buff, MAX_NAME_SIZE), '\n',
                        [self = shared_from_this()](
                            error_code error, std::size_t bytes_transferred) {
                          self->on_get_name(error, bytes_transferred);
@@ -71,15 +71,12 @@ void chat::session::async_read_body() {
 void chat::session::on_read_body(error_code error,
                                  std::size_t bytes_transferred) {
   if (!error) {
-    std::stringstream message;
-    // TODO: ADD formating for name
-    message << name << ": " << std::istream(&body_buff).rdbuf();
+    // Write method that will  compose message.
+    Message msg{this->compose_body()};
+    msg.setName(this->compose_name());
 
     body_buff.consume(bytes_transferred);
-
-    // TODO: Inside the completion handeler (on_succefull_read) we want to
-    // add the message to the chat room and deliver to all connected clients.
-    on_susccesful_read(message.str());
+    on_susccesful_read(msg);
     async_read_body();
   } else {
     if (io::error::not_found == error.value()) {
@@ -92,12 +89,20 @@ void chat::session::on_read_body(error_code error,
 }
 
 void chat::session::async_write_message() {
-  // TODO: compose a more useful message
-  // TODO: Make sure to format the name before sending.
-  std::array<io::const_buffer, 3> view{io::buffer(outgoing.front().getName()),
-                                       io::buffer(": "),
-                                       io::buffer(outgoing.front().getBody())};
+  // Compose message buffer view.
+  auto message = outgoing.front();
 
+  std::vector<io::const_buffer> view;
+
+  if (message.getName().empty()) {
+    view.push_back(io::buffer(outgoing.front().getBody()));
+  } else {
+    view.push_back(io::buffer(outgoing.front().getName()));
+    view.push_back(io::buffer(":\n"));
+    view.push_back(io::buffer(outgoing.front().getBody()));
+  }
+
+  // Write message buffer view
   io::async_write(connected_sock, view,
                   [self = shared_from_this()](error_code error,
                                               std::size_t bytes_transferred) {
@@ -117,4 +122,24 @@ void chat::session::on_write_message(error_code error,
     connected_sock.close(error);
     on_error();
   }
+}
+
+std::string chat::session::compose_name() {
+  std::string name;
+  std::istringstream sname{name_buff};
+  std::getline(sname, name);
+
+  return name;
+}
+std::string chat::session::compose_body() {
+  std::string body;
+  std::string line;
+
+  std::istream ibody{&body_buff};
+
+  while (std::getline(ibody, line) && line != "EOF") {
+    body += (line + "\n");
+  }
+
+  return body;
 }
