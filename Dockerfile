@@ -30,11 +30,11 @@ ENTRYPOINT [ "/bin/bash"]
 # Running server
 FROM alpine:latest as server
 WORKDIR /root/
-COPY --from=dev /project/http-server/bin/server .
-CMD ["./http-server"]
+COPY --from=dev /project/chat-server/bin/server_run .
+CMD ["./server_run"]
 
 # Running client
 FROM alpine:latest as client
 WORKDIR /root/
-COPY --from=dev /project/http-server/bin/client .
-CMD ["./http-server"]
+COPY --from=dev /project/chat-server/bin/client_run .
+CMD ["./client_run"]
