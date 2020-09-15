@@ -15,17 +15,22 @@ class session : public std::enable_shared_from_this<session>,
   void post(const Message&);
 
  private:
-  void async_read();
-  void on_read(const error_code, std::size_t bytes_transferred);
-  void async_write();
-  void on_write(error_code error, std::size_t bytes_transferred);
+  void async_read_body();
+  void on_read_body(const error_code, std::size_t bytes_transferred);
+  void async_write_message();
+  void on_write_message(error_code error, std::size_t bytes_transferred);
+  void ask_for_name();
+  void on_ask_for_name(error_code error, std::size_t bytes_transferred);
+  void get_name();
+  void on_get_name(error_code error, std::size_t bytes_transferred);
 
     // Outgoing queue prevents us from a data race by writing into the socket.
   std::queue<Message> outgoing;
   tcp::socket connected_sock;
-  io::streambuf read_sbuff;
+  io::streambuf body_buff;
   message_handler on_susccesful_read;
   error_handler on_error;
+  std::string name;
 };
 
 }  // namespace chat
