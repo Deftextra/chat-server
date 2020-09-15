@@ -37,7 +37,7 @@ This opens the vscode command window. Enter
 ```
 This creates a development container instance with a stand alone boost library based on the 
 image [Dockerfile](Dockerfile). You can add more configurations for the dev container in the 
-.devcontainer file. See: [Developing inside a container](https://code.visualstudio.com/docs/remote/container) for more information on how to do this.
+.devcontainer file. See: [Developing inside a container](https://code.visualstudio.com/docs/remote/containers) for more information on how to do this.
 
 Run the ``./cbuild`` command in a terminal to start a clean build or use vscode or other ide 
 extension to run and debug the build.
