@@ -1,4 +1,5 @@
 #include "server.hpp"
+
 #include <functional>
 
 chat::server::server(io::io_context& io_context, std::uint16_t port)
@@ -11,6 +12,7 @@ void chat::server::async_accept() {
       auto client = std::make_shared<session>(std::move(socket));
 
       chat_room.join(client);
+      client->post(client->compose_name() + " has joined the chat");
 
       client->start(
           std::bind(&room::broadcast, &chat_room, std::placeholders::_1),
@@ -18,7 +20,7 @@ void chat::server::async_accept() {
             chat_room.leave(client);
             // TODO: capture the case when session has no name. This should
             // never occur.
-            chat_room.broadcast(client->compose_name() + "has left the chat");
+            chat_room.broadcast(client->compose_name() + " has left the chat");
           });
 
       async_accept();
