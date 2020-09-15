@@ -5,21 +5,21 @@ chat::session::session(tcp::socket&& socket)
 
 void chat::session::start(message_handler&& on_message,
                           error_handler&& on_error) {
-  this->on_susccesful_read = std::move(on_message);
+  this->on_successful_read = std::move(on_message);
   this->on_error = std::move(on_error);
 
-  ask_for_name();
+  query_for_name();
 }
 
-void chat::session::ask_for_name() {
+void chat::session::query_for_name() {
   io::async_write(connected_sock, io::buffer("Enter name: "),
                   [self = shared_from_this()](error_code error,
                                               std::size_t bytes_transferred) {
-                    self->on_ask_for_name(error, bytes_transferred);
+                    self->on_query_for_name(error, bytes_transferred);
                   });
 }
 
-void chat::session::on_ask_for_name(error_code error,
+void chat::session::on_query_for_name(error_code error,
                                     std::size_t bytes_transferred) {
   if (!error) {
     get_name();
@@ -76,7 +76,7 @@ void chat::session::on_read_body(error_code error,
     msg.setName(this->compose_name());
 
     body_buff.consume(bytes_transferred);
-    on_susccesful_read(msg);
+    on_successful_read(msg);
     async_read_body();
   } else {
     if (io::error::not_found == error.value()) {
@@ -94,11 +94,15 @@ void chat::session::async_write_message() {
 
   std::vector<io::const_buffer> view;
 
+  //TODO: composing the message should be handeled by the client. We should minimise.
+  // the amount of data being transferred.
+  view.push_back(io::buffer("\n--------------------\n"));
+
   if (message.getName().empty()) {
     view.push_back(io::buffer(outgoing.front().getBody()));
   } else {
     view.push_back(io::buffer(outgoing.front().getName()));
-    view.push_back(io::buffer(":\n"));
+    view.push_back(io::buffer(" says:\n"));
     view.push_back(io::buffer(outgoing.front().getBody()));
   }
 
