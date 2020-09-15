@@ -23,8 +23,8 @@ class session : public std::enable_shared_from_this<session>,
   void on_read_body(const error_code, std::size_t bytes_transferred);
   void async_write_message();
   void on_write_message(error_code error, std::size_t bytes_transferred);
-  void ask_for_name();
-  void on_ask_for_name(error_code error, std::size_t bytes_transferred);
+  void query_for_name();
+  void on_query_for_name(error_code error, std::size_t bytes_transferred);
   void get_name();
   void on_get_name(error_code error, std::size_t bytes_transferred);
 
@@ -32,7 +32,7 @@ class session : public std::enable_shared_from_this<session>,
   std::queue<Message> outgoing;
   tcp::socket connected_sock;
   io::streambuf body_buff;
-  message_handler on_susccesful_read;
+  message_handler on_successful_read;
   error_handler on_error;
   std::string name_buff;
 };
